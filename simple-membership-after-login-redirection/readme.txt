@@ -2,9 +2,9 @@
 Contributors: smp7, wp.insider
 Donate link: https://simple-membership-plugin.com/
 Tags: login, redirection, member, members, membership, login redirection, access, level
-Requires at least: 3.8
+Requires at least: 4.5
 Tested up to: 6.6
-Stable tag: 1.6
+Stable tag: 1.7
 License: GPLv2 or later
 
 An addon for the simple membership plugin to configure after login redirection to a specific page based on the member's level.
@@ -31,6 +31,9 @@ None
 None
 
 == Changelog ==
+
+= 1.7 =
+* Added 'wp_validate_redirect' function to validate the redirect URL when the 'swpm_redirect_to' parameter is set.
 
 = 1.6 =
 * Added an extra line debug logging output to show which page it is redirecting to. Useful for troubleshooting.

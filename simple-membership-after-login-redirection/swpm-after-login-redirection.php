@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Simple Membership After Login Redirection
-Version: v1.6
+Version: v1.7
 Plugin URI: https://simple-membership-plugin.com/
 Author: smp7, wp.insider
 Author URI: https://simple-membership-plugin.com/
@@ -96,6 +96,11 @@ function swpm_alr_do_after_login_redirection() {
         //First check if a the swpm_redirect_to argument is set (meaning the user needs to be redirected to the last page).
         if(isset($_REQUEST['swpm_redirect_to']) && !empty($_REQUEST['swpm_redirect_to'])){
             $redirect_to = esc_url_raw(sanitize_text_field($_REQUEST['swpm_redirect_to']));
+
+            //Validate the redirect URL
+            $fallback_url = home_url('/');
+            //The 'allowed_redirect_hosts' filter hook can be used to add or remove allowed hosts.
+            $redirect_to = wp_validate_redirect( $redirect_to, $fallback_url );            
             //Redirect to the membership level specific after login page.
             if( class_exists('SwpmLog') ){
                 SwpmLog::log_simple_debug("The 'swpm_redirect_to' request parameter is present. Redirecting to: " . $redirect_to, true);
