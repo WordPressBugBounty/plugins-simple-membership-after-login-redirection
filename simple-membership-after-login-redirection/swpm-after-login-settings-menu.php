@@ -23,13 +23,13 @@ function swpm_alr_admin_interface() {
         echo '</div>';
     }
 
-    $swpm_alr_settings = get_option('swpm_alr_settings');
-    if(empty($swpm_alr_settings['redirect_to_last_page_enabled'])){
+    $swpm_alr_settings = get_option('swpm_alr_settings', array());
+    if(!isset($swpm_alr_settings['redirect_to_last_page_enabled']) || empty($swpm_alr_settings['redirect_to_last_page_enabled'])){
         $swpm_alr_settings['redirect_to_last_page_enabled'] = '';
     }
     $redirect_to_last_page_enabled = $swpm_alr_settings['redirect_to_last_page_enabled'];
 
-    if(empty($swpm_alr_settings['allow_custom_redirections'])){
+    if(!isset($swpm_alr_settings['allow_custom_redirections']) || empty($swpm_alr_settings['allow_custom_redirections'])){
         $swpm_alr_settings['allow_custom_redirections'] = '';
     }
     $allow_custom_redirections = $swpm_alr_settings['allow_custom_redirections'];
