@@ -4,7 +4,7 @@ Donate link: https://simple-membership-plugin.com/
 Tags: login, redirection, member, members, membership, login redirection, access, level
 Requires at least: 4.5
 Tested up to: 6.7
-Stable tag: 1.8
+Stable tag: 1.9
 License: GPLv2 or later
 
 An addon for the simple membership plugin to configure after login redirection to a specific page based on the member's level.
@@ -31,6 +31,9 @@ None
 None
 
 == Changelog ==
+
+= 1.9 =
+* Fixed a minior version number formatting issue which was causing the addon to show an update notification even when there is no update.
 
 = 1.8 =
 * Fixed a PHP debug warning that occurred when the addon's settings had never been saved.

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Simple Membership After Login Redirection
-Version: v1.8
+Version: 1.9
 Plugin URI: https://simple-membership-plugin.com/
 Author: smp7, wp.insider
 Author URI: https://simple-membership-plugin.com/
@@ -12,7 +12,8 @@ if (!defined('ABSPATH')){
     exit; //Exit if accessed directly
 }
 
-define('SWPM_ALR_CONTEXT', 'swpm_alr');
+define( 'SWPM_ALR_VERSION', '1.9' );
+define( 'SWPM_ALR_CONTEXT', 'swpm_alr');
 
 include_once('swpm-after-login-settings-menu.php');//Settings menu handling file.
 
