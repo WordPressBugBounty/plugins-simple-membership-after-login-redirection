@@ -3,8 +3,8 @@ Contributors: smp7, wp.insider
 Donate link: https://simple-membership-plugin.com/
 Tags: login, redirection, member, members, membership, login redirection, access, level
 Requires at least: 4.5
-Tested up to: 6.7
-Stable tag: 1.9
+Tested up to: 6.9
+Stable tag: 2.0
 License: GPLv2 or later
 
 An addon for the simple membership plugin to configure after login redirection to a specific page based on the member's level.
@@ -31,6 +31,9 @@ None
 None
 
 == Changelog ==
+
+= 2.0 =
+* Support added for the [Social Login Addon](https://simple-membership-plugin.com/simple-membership-social-login-addon/) - now the after login redirection will also work when the member logs in using social login.
 
 = 1.9 =
 * Fixed a minior version number formatting issue which was causing the addon to show an update notification even when there is no update.

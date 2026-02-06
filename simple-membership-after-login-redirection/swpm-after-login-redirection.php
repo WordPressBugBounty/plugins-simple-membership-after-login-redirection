@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Simple Membership After Login Redirection
-Version: 1.9
+Version: 2.0
 Plugin URI: https://simple-membership-plugin.com/
 Author: smp7, wp.insider
 Author URI: https://simple-membership-plugin.com/
@@ -12,7 +12,7 @@ if (!defined('ABSPATH')){
     exit; //Exit if accessed directly
 }
 
-define( 'SWPM_ALR_VERSION', '1.9' );
+define( 'SWPM_ALR_VERSION', '2.0' );
 define( 'SWPM_ALR_CONTEXT', 'swpm_alr');
 
 include_once('swpm-after-login-settings-menu.php');//Settings menu handling file.
@@ -20,6 +20,7 @@ include_once('swpm-after-login-settings-menu.php');//Settings menu handling file
 add_action('swpm_after_login', 'swpm_alr_do_after_login_redirection');
 add_filter('swpm_after_login_url', 'swpm_alr_after_login_url');
 add_filter('swpm_get_login_link_url', 'swpm_alr_append_query_arg_if_applicable');
+add_filter('swpm_sl_after_login_redirect_url', 'swpm_alr_do_after_social_login_redirection', 10, 2);
 
 // The following 6 filters are used to allow the usage of the swpm_redirect_to parameter, if it is currently present in the page's URL
 add_filter('swpm_after_reg_callback_login_page_url', 'swpm_alr_append_custom_redirection_if_exists');
@@ -126,6 +127,41 @@ function swpm_alr_do_after_login_redirection() {
 
         //No redirection found. So stay on the current page.
     }
+}
+
+function swpm_alr_do_after_social_login_redirection($redirect_to, $auth_data){
+    if (method_exists('SWPM_SL_Utils', 'log_simple_debug')) {
+        SWPM_SL_Utils::log_simple_debug("After login redirection addon. Checking if member need to be redirected.", true);
+    }
+
+    $swpm_member = SwpmMemberUtils::get_user_by_email($auth_data->email);
+
+    if (empty($auth_data->referer_url)) {
+        return $redirect_to;
+    }
+
+    //First check if a the swpm_redirect_to argument is set (meaning the user needs to be redirected to the last page).
+    $query_string = parse_url($auth_data->referer_url, PHP_URL_QUERY);
+    if (!empty($query_string)) {
+        parse_str($query_string, $query_params);
+        if(isset($query_params['swpm_redirect_to']) && wp_http_validate_url($query_params['swpm_redirect_to'])){
+            return esc_url_raw($query_params['swpm_redirect_to']);
+        }
+    }
+
+    //Check if there is a membership level specific after login redirection
+    $level_id = $swpm_member->membership_level;
+    $key = 'swpm_alr_after_login_page_field';
+    $after_login_page_url = SwpmMembershipLevelCustom::get_value_by_key($level_id, $key);
+    if (!empty($after_login_page_url)) {
+        //Redirect to the membership level specific after login page.
+        if (method_exists('SWPM_SL_Utils', 'log_simple_debug')) {
+            SWPM_SL_Utils::log_simple_debug("After login redirection is configured in the membership level. Redirecting to: " . $after_login_page_url, true);
+        }            
+        return $after_login_page_url;
+    }
+
+    return $redirect_to;
 }
 
 function swpm_alr_after_login_url($url) {
