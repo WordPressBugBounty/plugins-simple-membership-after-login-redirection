@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Simple Membership After Login Redirection
-Version: 2.0
+Version: 2.1
 Plugin URI: https://simple-membership-plugin.com/
 Author: smp7, wp.insider
 Author URI: https://simple-membership-plugin.com/
@@ -12,7 +12,7 @@ if (!defined('ABSPATH')){
     exit; //Exit if accessed directly
 }
 
-define( 'SWPM_ALR_VERSION', '2.0' );
+define( 'SWPM_ALR_VERSION', '2.1' );
 define( 'SWPM_ALR_CONTEXT', 'swpm_alr');
 
 include_once('swpm-after-login-settings-menu.php');//Settings menu handling file.
@@ -186,6 +186,9 @@ function swpm_alr_append_query_arg_if_applicable($login_url){
 
     //Check if the redirect to last page settings is enabled.
     $swpm_alr_settings = get_option('swpm_alr_settings');
+    if(!is_array($swpm_alr_settings)){
+        $swpm_alr_settings = array();
+    }
     if(empty($swpm_alr_settings['redirect_to_last_page_enabled'])){
         $swpm_alr_settings['redirect_to_last_page_enabled'] = '';
     }
@@ -214,6 +217,9 @@ function swpm_alr_append_custom_redirection_if_exists($url){
 
     //Check if the option 'allow_custom_redirections' is enabled or not.
     $swpm_alr_settings = get_option('swpm_alr_settings');
+    if(!is_array($swpm_alr_settings)){
+        $swpm_alr_settings = array();
+    }
     if(empty($swpm_alr_settings['allow_custom_redirections'])){
         $swpm_alr_settings['allow_custom_redirections'] = '';
     }
@@ -242,6 +248,9 @@ function swpm_alr_override_registration_redirect_url($url){
 
     //Check if the option 'allow_custom_redirections' is enabled or not.
     $swpm_alr_settings = get_option('swpm_alr_settings');
+    if(!is_array($swpm_alr_settings)){
+        $swpm_alr_settings = array();
+    }
     if(empty($swpm_alr_settings['allow_custom_redirections'])){
         $swpm_alr_settings['allow_custom_redirections'] = '';
     }
